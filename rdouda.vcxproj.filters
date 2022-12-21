@@ -15,18 +15,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
+    <ClCompile Include="source\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="student_manager.c">
+    <ClCompile Include="source\student_manager.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="types.h">
+    <ClInclude Include="source\types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="student_manager.h">
+    <ClInclude Include="source\student_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
