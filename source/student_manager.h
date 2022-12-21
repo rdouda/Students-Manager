@@ -1,7 +1,6 @@
 #pragma once
 #ifndef STUDENT_MANAGER_H
 #define STUDENT_MANAGER_H
-#define INRANGE(n, a, b) (n >= a && n <= b)
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -12,7 +11,7 @@
 #include <math.h>
 #include "types.h"
 
-void main_menu();
+void main_loop(Student[], int*);
 void add_student(Student[], int*);
 void remove_student(Student[], int*);
 void update_student(Student[], const int);
