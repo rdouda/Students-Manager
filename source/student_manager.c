@@ -25,6 +25,7 @@ void add_student(Student students[], int *size){
 	strcpy_s(students[*size].name, sizeof(students[*size].name), student.name);
 
 	*size = *size + 1;
+	save_data(students, *size);
 	printf("Student added successfully.");
 }
 
@@ -41,6 +42,7 @@ void remove_student(Student students[], int* size){
 			strcpy_s(students[i].name, sizeof(students[i].name), students[i + 1].name);
 		}
 		*size = *size - 1;
+		save_data(students, *size);
 		printf("Student %d removed successfully.", id);
 	}
 	else
@@ -71,6 +73,7 @@ void update_student(Student students[], const int size){
 	students[index].level = student.level;
 	memset(students[index].name, 0, sizeof(students[index].name));
 	strcpy_s(students[index].name, sizeof(students[index].name), student.name);
+	save_data(students, size);
 }
 
 void display_students(Student students[], const int size){
@@ -98,6 +101,7 @@ void sort_students(Student students[], const int size){
 		for (int j = 0; j < size - i - 1; j++)
 			if (students[j].level > students[j + 1].level)
 				swap(&students[j], &students[j + 1]);
+	save_data(students, size);
 	printf("Operation successfull.");
 }
 
@@ -178,6 +182,40 @@ void swap(Student* sa, Student* sb) {
 	sb->average = stt.average;
 	memset(sb->name, 0, sizeof(sb->name));
 	strcpy_s(sb->name, sizeof(sb->name), stt.name);
+}
+
+void save_data(Student students[], const int size){
+	FILE* file;
+	if (size == 0) {
+		errno_t err = fopen_s(&file, "data.bin", "w");
+		if (err == 0)
+			fclose(file);
+		else
+			printf("\nERROR CREATING FILE.\n");
+		return;
+	}
+	errno_t err = fopen_s(&file, "data.bin", "w");
+	if (err == 0) {
+		for (int i = 0; i < size; i++){
+			fwrite(&students[i], sizeof(Student), 1, file);
+		}
+		fclose(file);
+	}
+}
+
+void load_data(Student students[], int* size){
+	FILE* file;
+	*size = 0;
+	errno_t err = fopen_s(&file, "data.bin", "r");
+	if (err == 0) {
+		for (int i = 0; i < MAX_STUDENTS; i++){
+			if (fread(&students[i], sizeof(Student), 1, file) > 0)
+				*size = *size + 1;
+		}
+		fclose(file);
+	}
+	else
+		save_data(students, *size);
 }
 
 int compare(const float a1, const float a2, const int l1, const int l2){

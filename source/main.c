@@ -5,6 +5,7 @@ int students_count = 0;
 
 void main_menu() {
 	//t_add_students(students, &students_count);
+	load_data(students, &students_count);
 	while (1) {
 		system("cls");
 		int choice;
