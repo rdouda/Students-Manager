@@ -1,10 +1,8 @@
 #include "student_manager.h"
 
 void main_loop(Student students[], int* students_count){
-	load_data(students, students_count);
 	while (1) {
 		system("cls");
-		int choice;
 		printf(" Please specify the operation you want to be performed.\n");
 		printf(" 0. Exit the application.\n");
 		printf(" 1. Add a student.\n");
@@ -17,21 +15,19 @@ void main_loop(Student students[], int* students_count){
 		printf(" 8. Calculate the general average by level.\n");
 		printf(" 9. Sort students\n");
 		printf(" > ");
-		do {
-			scanf_s("%d", &choice);
-		} while (choice > 9 || choice < 0);
+		int choice = (int)input("", 0, 9);
 		system("cls");
 		switch (choice) {
-		case 0: exit(0); break;
-		case 1: add_student(students, students_count); break;
-		case 2: remove_student(students, students_count); break;
-		case 3: update_student(students, *students_count); break;
-		case 4: display_students(students, *students_count); break;
-		case 5: display_student_by_id(students, *students_count); break;
-		case 6: display_students_by_level(students, *students_count); break;
-		case 7: display_students_by_average(students, *students_count); break;
-		case 8: display_general_average_by_level(students, *students_count); break;
-		case 9: sort_students(students, *students_count); break;
+			case 0: save_data(students, *students_count); exit(0);
+			case 1: add_student(students, students_count); break;
+			case 2: remove_student(students, students_count); break;
+			case 3: update_student(students, *students_count); break;
+			case 4: display_students(students, *students_count); break;
+			case 5: display_student_by_id(students, *students_count); break;
+			case 6: display_students_by_level(students, *students_count); break;
+			case 7: display_students_by_average(students, *students_count); break;
+			case 8: display_general_average_by_level(students, *students_count); break;
+			case 9: sort_students(students, *students_count); break;
 		default:
 			break;
 		}
@@ -42,9 +38,8 @@ void main_loop(Student students[], int* students_count){
 
 void add_student(Student students[], int *size){
 	Student student;
-	printf("Enter student id      : ");
 	while(1){
-		scanf_s("%d", &student.id);
+		student.id = (int)input("Enter student id      : ", INT_MIN, INT_MAX);
 		if (find_student_by_id(students, *size, student.id) != -1){
 			printf("Student with id = %d already exist.\n", student.id);
 			printf("Enter student id      : ");
@@ -65,14 +60,11 @@ void add_student(Student students[], int *size){
 	strcpy_s(students[*size].name, sizeof(students[*size].name), student.name);
 
 	*size = *size + 1;
-	save_data(students, *size);
-	printf("Student added successfully.");
+	printf("Student added successfully.\n");
 }
 
 void remove_student(Student students[], int* size){
-	int id;
-	printf("Enter student id to remove : ");
-	scanf_s("%d", &id);
+	int id = (int)input("Enter student id to remove : ", INT_MIN, INT_MAX);
 	int index_to_remove = find_student_by_id(students, *size, id);
 	if (index_to_remove > -1) {
 		for (int i = index_to_remove; i < *size - 1; i++) {
@@ -82,22 +74,18 @@ void remove_student(Student students[], int* size){
 			strcpy_s(students[i].name, sizeof(students[i].name), students[i + 1].name);
 		}
 		*size = *size - 1;
-		save_data(students, *size);
-		printf("Student %d removed successfully.", id);
+		printf("Student %d removed successfully.\n", id);
 	}
 	else
-		printf("Student %d was not found.", id);
+		printf("Student %d was not found.\n", id);
 }
 
 void update_student(Student students[], const int size){
 	Student student;
-	int id;
-	int index;
-	printf("Enter student id to update : ");
-	scanf_s("%d", &id);
-	index = find_student_by_id(students, size, id);
+	int id = (int)input("Enter student id to update : ", INT_MIN, INT_MAX);
+	int index = find_student_by_id(students, size, id);
 	if (index == -1){
-		printf("Student %d was not found.", id);
+		printf("Student %d was not found.\n", id);
 		return;
 	}
 	printf("Enter student id      : ");
@@ -113,12 +101,12 @@ void update_student(Student students[], const int size){
 	students[index].level = student.level;
 	memset(students[index].name, 0, sizeof(students[index].name));
 	strcpy_s(students[index].name, sizeof(students[index].name), student.name);
-	save_data(students, size);
+	printf("Student updated successfully.\n");
 }
 
 void display_students(Student students[], const int size){
 	if(size == 0)
-		printf("Empty.");
+		printf("Empty.\n");
 	for (int i = 0; i < size; i++) {
 		display_student(students[i]);
 	}
@@ -141,8 +129,7 @@ void sort_students(Student students[], const int size){
 		for (int j = 0; j < size - i - 1; j++)
 			if (students[j].level > students[j + 1].level)
 				swap(&students[j], &students[j + 1]);
-	save_data(students, size);
-	printf("Operation successfull.");
+	printf("Operation successfull.\n");
 }
 
 void display_student(Student student) {
@@ -154,9 +141,7 @@ void display_student(Student student) {
 }
 
 void display_student_by_id(Student students[], const int size){
-	int id;
-	printf("Enter student id : ");
-	scanf_s("%d", &id);
+	int id = (int)input("Enter student id : ", INT_MIN, INT_MAX);
 	int index = find_student_by_id(students, size, id);
 	if (index == -1) {
 		printf("Student %d was not found.", id);
@@ -166,10 +151,8 @@ void display_student_by_id(Student students[], const int size){
 }
 
 void display_students_by_level(Student students[], const int size){
-	int level;
+	int level = (int)input("Enter students level : ", INT_MIN, INT_MAX);
 	int found = 0;
-	printf("Enter students level : ");
-	scanf_s("%d", &level);
 	for (int i = 0; i < size; i++) {
 		if (students[i].level == level)
 			found++;
@@ -185,10 +168,8 @@ void display_students_by_level(Student students[], const int size){
 }
 
 void display_students_by_average(Student students[], const int size){
-	float average;
+	float average = input("Enter students average : ", INT_MIN, INT_MAX);;
 	int found = 0;
-	printf("Enter students average : ");
-	scanf_s("%f", &average);
 	printf("Students average in range[%f %f]\n", floor(average), ceil(average));
 	for (int i = 0; i < size; i++) {
 		if(students[i].average <= ceil(average) && students[i].average >= floor(average)){
@@ -198,9 +179,7 @@ void display_students_by_average(Student students[], const int size){
 }
 
 void display_general_average_by_level(Student students[], const int size){
-	int level;
-	printf("Enter students level : ");
-	scanf_s("%d", &level);
+	int level = (int)input("Enter students level : ", INT_MIN, INT_MAX);
 	printf("\nStudents average : %f", calculate_general_average_by_level(students, size, level));
 }
 
@@ -226,36 +205,40 @@ void swap(Student* sa, Student* sb) {
 
 void save_data(Student students[], const int size){
 	FILE* file;
-	if (size == 0) {
-		errno_t err = fopen_s(&file, "data.bin", "w");
-		if (err == 0)
-			fclose(file);
-		else
-			printf("\nERROR CREATING FILE.\n");
-		return;
-	}
 	errno_t err = fopen_s(&file, "data.bin", "w");
-	if (err == 0) {
-		for (int i = 0; i < size; i++){
+	if (err != 0)
+		return;
+	if (size > 0) {
+		for (int i = 0; i < size; i++) {
 			fwrite(&students[i], sizeof(Student), 1, file);
 		}
-		fclose(file);
 	}
+	fclose(file);
 }
 
 void load_data(Student students[], int* size){
 	FILE* file;
 	*size = 0;
 	errno_t err = fopen_s(&file, "data.bin", "r");
-	if (err == 0) {
-		for (int i = 0; i < MAX_STUDENTS; i++){
-			if (fread(&students[i], sizeof(Student), 1, file) > 0)
-				*size = *size + 1;
-		}
-		fclose(file);
+	if (err != 0)
+		return;
+	for (int i = 0; i < MAX_STUDENTS; i++){
+		if (fread(&students[i], sizeof(Student), 1, file) > 0)
+			*size = *size + 1;
 	}
-	else
+	fclose(file);
+	if(*size == 0)
 		save_data(students, *size);
+}
+
+float input(const char* str, const int min, const int max){
+	float in;
+	if (str != "")
+		printf("%s", str);
+	do{
+		scanf_s("%f", &in);
+	} while (in < min || in > max);
+	return in;
 }
 
 int compare(const float a1, const float a2, const int l1, const int l2){

@@ -7,7 +7,8 @@
 #include <string.h>
 #include <conio.h>
 #include <assert.h>
-#include <sys/stat.h>
+#include <limits.h>
+#include <time.h>
 #include <math.h>
 #include "types.h"
 
@@ -29,7 +30,7 @@ void load_data(Student[], int*);
 
 int    compare(const float, const float, const int, const int);
 int    find_student_by_id(Student[], const int, const int);
+float  input(const char*, const int, const int);
 float  calculate_general_average_by_level(Student[], const int, const int);
-
 
 #endif // !STUDENT_MANAGER_H
