@@ -15,7 +15,7 @@ void main_loop(Student students[], int* students_count){
 		printf(" 8. Calculate the general average by level.\n");
 		printf(" 9. Sort students\n");
 		printf(" > ");
-		int choice = (int)input("", 0, 9);
+		int choice = strtoint(input());
 		system("cls");
 		switch (choice) {
 			case 0: save_data(students, *students_count); exit(0);
@@ -39,11 +39,14 @@ void main_loop(Student students[], int* students_count){
 void add_student(Student students[], int *size){
 	Student student;
 	while(1){
-		student.id = (int)input("Enter student id      : ", INT_MIN, INT_MAX);
-		if (find_student_by_id(students, *size, student.id) != -1){
+		printf("Enter 'cancel' to return.\n");
+		printf("Enter student id      : ");
+		char* in = input();
+		if (strcmp(in, "cancel") == 0)
+			return;
+		student.id = strtoint(in);
+		if (find_student_by_id(students, *size, student.id) != -1)
 			printf("Student with id = %d already exist.\n", student.id);
-			printf("Enter student id      : ");
-		}
 		else
 			break;
 	}
@@ -64,25 +67,41 @@ void add_student(Student students[], int *size){
 }
 
 void remove_student(Student students[], int* size){
-	int id = (int)input("Enter student id to remove : ", INT_MIN, INT_MAX);
-	int index_to_remove = find_student_by_id(students, *size, id);
-	if (index_to_remove > -1) {
-		for (int i = index_to_remove; i < *size - 1; i++) {
-			students[i].id = students[i + 1].id;
-			students[i].level = students[i + 1].level;
-			students[i].average = students[i + 1].average;
-			strcpy_s(students[i].name, sizeof(students[i].name), students[i + 1].name);
-		}
-		*size = *size - 1;
-		printf("Student %d removed successfully.\n", id);
+	printf("Enter 'cancel' to return.\n");
+	printf("Enter 'remove all' to removeall students.\n");
+	printf("Enter student id to delete : ");
+	char* in = input();
+	if (strcmp(in, "cancel") == 0)
+		return;
+	if (strcmp(in, "removeall") == 0){
+		*size = 0;
+		save_data(students, *size);
+		return;
 	}
-	else
+	int id = strtoint(in);
+	int index_to_remove = find_student_by_id(students, *size, id);
+	if (index_to_remove == -1) {
 		printf("Student %d was not found.\n", id);
+		return;
+	}
+	for (int i = index_to_remove; i < *size - 1; i++) {
+		students[i].id = students[i + 1].id;
+		students[i].level = students[i + 1].level;
+		students[i].average = students[i + 1].average;
+		strcpy_s(students[i].name, sizeof(students[i].name), students[i + 1].name);
+	}
+	*size = *size - 1;
+	printf("Student %d removed successfully.\n", id);
 }
 
 void update_student(Student students[], const int size){
 	Student student;
-	int id = (int)input("Enter student id to update : ", INT_MIN, INT_MAX);
+	printf("Enter 'cancel' to return.\n");
+	printf("Enter student id to update : ");
+	char* in = input();
+	if (strcmp(in, "cancel") == 0)
+		return;
+	int id = strtoint(in);
 	int index = find_student_by_id(students, size, id);
 	if (index == -1){
 		printf("Student %d was not found.\n", id);
@@ -141,7 +160,12 @@ void display_student(Student student) {
 }
 
 void display_student_by_id(Student students[], const int size){
-	int id = (int)input("Enter student id : ", INT_MIN, INT_MAX);
+	printf("Enter 'cancel' to return.\n");
+	printf("Enter student id : ");
+	char* in = input();
+	if (strcmp(in, "cancel") == 0)
+		return;
+	int id = strtoint(in);
 	int index = find_student_by_id(students, size, id);
 	if (index == -1) {
 		printf("Student %d was not found.", id);
@@ -151,7 +175,12 @@ void display_student_by_id(Student students[], const int size){
 }
 
 void display_students_by_level(Student students[], const int size){
-	int level = (int)input("Enter students level : ", INT_MIN, INT_MAX);
+	printf("Enter 'cancel' to return.\n");
+	printf("Enter students level : ");
+	char* in = input();
+	if (strcmp(in, "cancel") == 0)
+		return;
+	int level = strtoint(in);
 	int found = 0;
 	for (int i = 0; i < size; i++) {
 		if (students[i].level == level)
@@ -168,7 +197,12 @@ void display_students_by_level(Student students[], const int size){
 }
 
 void display_students_by_average(Student students[], const int size){
-	float average = input("Enter students average : ", INT_MIN, INT_MAX);;
+	printf("Enter 'cancel' to return.\n");
+	printf("Enter students average : ");
+	char* in = input();
+	if (strcmp(in, "cancel") == 0)
+		return;
+	float average = strtoflt(in);
 	int found = 0;
 	printf("Students average in range[%f %f]\n", floor(average), ceil(average));
 	for (int i = 0; i < size; i++) {
@@ -179,7 +213,12 @@ void display_students_by_average(Student students[], const int size){
 }
 
 void display_general_average_by_level(Student students[], const int size){
-	int level = (int)input("Enter students level : ", INT_MIN, INT_MAX);
+	printf("Enter 'cancel' to return.\n");
+	printf("Enter students level : ");
+	char* in = input();
+	if (strcmp(in, "cancel") == 0)
+		return;
+	int level = strtoint(in);
 	printf("\nStudents average : %f", calculate_general_average_by_level(students, size, level));
 }
 
@@ -231,14 +270,33 @@ void load_data(Student students[], int* size){
 		save_data(students, *size);
 }
 
-float input(const char* str, const int min, const int max){
-	float in;
-	if (str != "")
-		printf("%s", str);
-	do{
-		scanf_s("%f", &in);
-	} while (in < min || in > max);
+char* input(){
+	static char in[20];
+	scanf_s("%s", in, (unsigned int)sizeof(in));
 	return in;
+}
+
+int strtoint(const char* str){
+	char* nullp;
+	int i = strtol(str, &nullp, 10);
+	if (*nullp == '\0')
+		return i;
+	return 0;
+}
+
+char* inttostr(const int i){
+	static char str[32];
+	memset(str, 0, sizeof(str));
+	sprintf_s(str, 32,"%d", i);
+	return str;
+}
+
+float strtoflt(const char* str){
+	char* nullp;
+	float f = strtof(str, &nullp);
+	if (*nullp == '\0')
+		return f;
+	return 0.0f;
 }
 
 int compare(const float a1, const float a2, const int l1, const int l2){
