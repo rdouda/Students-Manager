@@ -67,6 +67,10 @@ void add_student(Student students[], int *size){
 }
 
 void remove_student(Student students[], int* size){
+	if (*size == 0) {
+		printf("List is empty.");
+		return;
+	}
 	printf("Enter 'cancel' to return.\n");
 	printf("Enter 'remove all' to removeall students.\n");
 	printf("Enter student id to delete : ");
@@ -95,6 +99,10 @@ void remove_student(Student students[], int* size){
 }
 
 void update_student(Student students[], const int size){
+	if (size == 0) {
+		printf("List is empty.");
+		return;
+	}
 	Student student;
 	printf("Enter 'cancel' to return.\n");
 	printf("Enter student id to update : ");
@@ -124,14 +132,20 @@ void update_student(Student students[], const int size){
 }
 
 void display_students(Student students[], const int size){
-	if(size == 0)
-		printf("Empty.\n");
+	if (size == 0) {
+		printf("List is empty.");
+		return;
+	}
 	for (int i = 0; i < size; i++) {
 		display_student(students[i]);
 	}
 }
 
 void sort_students(Student students[], const int size){
+	if (size == 0) {
+		printf("List is empty.");
+		return;
+	}
 	for (int i = 0; i < size - 1; i++) {
 		int min_index = i;
 		for (int j = i + 1; j < size; j++) {
@@ -152,7 +166,7 @@ void sort_students(Student students[], const int size){
 }
 
 void display_student(Student student) {
-	printf("STUDENT ID[%d]\n", student.id);
+	printf("STUDENT ID[ %d ]\n", student.id);
 	printf(" STUDENT ID       : %d\n", student.id);
 	printf(" STUDENT LEVEL    : %d\n", student.level);
 	printf(" STUDENT AVERAGE  : %f\n", student.average);
@@ -160,6 +174,10 @@ void display_student(Student student) {
 }
 
 void display_student_by_id(Student students[], const int size){
+	if (size == 0) {
+		printf("List is empty.");
+		return;
+	}
 	printf("Enter 'cancel' to return.\n");
 	printf("Enter student id : ");
 	char* in = input();
@@ -175,6 +193,10 @@ void display_student_by_id(Student students[], const int size){
 }
 
 void display_students_by_level(Student students[], const int size){
+	if (size == 0) {
+		printf("List is empty.");
+		return;
+	}
 	printf("Enter 'cancel' to return.\n");
 	printf("Enter students level : ");
 	char* in = input();
@@ -197,6 +219,10 @@ void display_students_by_level(Student students[], const int size){
 }
 
 void display_students_by_average(Student students[], const int size){
+	if (size == 0) {
+		printf("List is empty.");
+		return;
+	}
 	printf("Enter 'cancel' to return.\n");
 	printf("Enter students average : ");
 	char* in = input();
@@ -213,6 +239,10 @@ void display_students_by_average(Student students[], const int size){
 }
 
 void display_general_average_by_level(Student students[], const int size){
+	if (size == 0) {
+		printf("List is empty.");
+		return;
+	}
 	printf("Enter 'cancel' to return.\n");
 	printf("Enter students level : ");
 	char* in = input();
