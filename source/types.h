@@ -11,4 +11,9 @@ typedef struct {
 	char name[30];
 }Student;
 
+typedef struct {
+	char name[40];
+	void (*function)(Student[], int *);
+}Functions;
+
 #endif // !TYPES_H
