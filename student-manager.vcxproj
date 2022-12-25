@@ -131,6 +131,7 @@
     <ClCompile Include="source\student_manager.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\inc.h" />
     <ClInclude Include="source\student_manager.h" />
     <ClInclude Include="source\types.h" />
   </ItemGroup>

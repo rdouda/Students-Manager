@@ -12,8 +12,8 @@ typedef struct {
 }Student;
 
 typedef struct {
-	char name[40];
-	void (*function)(Student[], int *);
-}Functions;
+	Student students[MAX_STUDENTS];
+	int top;
+}Students;
 
 #endif // !TYPES_H

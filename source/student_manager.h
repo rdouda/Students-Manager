@@ -2,37 +2,33 @@
 #ifndef STUDENT_MANAGER_H
 #define STUDENT_MANAGER_H
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <conio.h>
-#include <limits.h>
-#include <math.h>
-#include <ctype.h>
-#include "types.h"
+#include "inc.h"
 
-void main_loop(Student[], int*);
-void add_student(Student[], int*);
-void remove_student(Student[], int*);
-void update_student(Student[], const int);
-void display_students(Student[], const int);
-void sort_students(Student[], const int);
+static Students* students;
+static bool WindowShouldClose = false;
 
-void display_student(Student);
-void display_student_by_id(Student[], const int);
-void display_students_by_level(Student[], const int);
-void display_students_by_average(Student[], const int);
-void display_general_average_by_level(Student[], const int);
-void swap(Student*, Student*);
-void save_data(Student[], const int);
-void load_data(Student[], int*);
+void init();
+void smgr();
+void quit();
 
-int    compare(const float, const float, const int, const int);
-int    find_student_by_id(Student[], const int, const int);
-char*  input();
-int    strtoint(const char*);
-char*  inttostr(const int);
-float  strtoflt(const char*);
-float  calculate_general_average_by_level(Student[], const int, const int);
+void show_menu();
+void show_commands();
+void add_student();
+void remove_student();
+void update_student();
+void display_students();
+void sort_students();
+
+void display_student();
+void display_student_by_id();
+void display_students_by_level();
+void display_students_by_average();
+void display_general_average_by_level();
+
+void save_data();
+void load_data();
+
+int process_command(char*);
+float command_similarity(const char*, const char*);
 
 #endif // !STUDENT_MANAGER_H
