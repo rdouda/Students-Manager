@@ -15,9 +15,11 @@ void show_menu();
 void show_commands();
 void add_student();
 void remove_student();
+void find_student();
 void update_student();
-void display_students();
+void list_students();
 void sort_students();
+void get_average();
 
 void display_student();
 void display_student_by_id();

@@ -4,7 +4,6 @@ void init(){
 	students = malloc(sizeof(Students));
 	if (students == NULL)
 		exit(EXIT_FAILURE);
-	students->top = 0;
 	load_data();
 }
 
@@ -24,8 +23,7 @@ void smgr(){
 				break;
 			}
 			case 2: {
-				quit();
-				break;
+				WindowShouldClose = true;
 			}
 			case 3: {
 				add_student(); 
@@ -40,7 +38,7 @@ void smgr(){
 				break;
 			}
 			case 6: {
-				list_student();
+				list_students();
 				break;
 			}
 			case 7: {
@@ -48,7 +46,11 @@ void smgr(){
 				break;
 			}
 			case 8: {
-				find_student();
+				get_average();
+				break;
+			}
+			case 9: {
+				sort_students();
 				break;
 			}
 			default:
@@ -62,8 +64,8 @@ void smgr(){
 }
 
 void quit(){
-	WindowShouldClose = true;
 	free(students);
+	exit(EXIT_SUCCESS);
 }
 
 void show_menu(){
@@ -85,25 +87,32 @@ void show_commands(){
 	printf("sort\n");
 }
 
-void add_student(){
+void add_student() {
 }
 
 void remove_student(){
 }
 
+void find_student(){
+}
+
 void update_student(){
 }
 
-void display_students(){
+void list_students(){
 }
 
 void sort_students(){
+}
+
+void get_average(){
 }
 
 void save_data(){
 }
 
 void load_data(){
+	students->top = 0;
 }
 
 int process_command(char* command){
