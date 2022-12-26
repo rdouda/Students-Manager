@@ -9,28 +9,30 @@ static bool WindowShouldClose = false;
 
 void init();
 void smgr();
+
+/*
+	Commands
+*/
+void help();
+void add();
+void delete();
+void find();
+void update();
+void list();
+void sort();
+void average();
 void quit();
-
-void show_menu();
-void show_commands();
-void add_student();
-void remove_student();
-void find_student();
-void update_student();
-void list_students();
-void sort_students();
-void get_average();
-
-void display_student();
-void display_student_by_id();
-void display_students_by_level();
-void display_students_by_average();
-void display_general_average_by_level();
+/*
+	Commands
+*/
 
 void save_data();
 void load_data();
 
-int process_command(char*);
+/*
+	Utils
+*/
 float command_similarity(const char*, const char*);
-
+char* input();
+void process_input();
 #endif // !STUDENT_MANAGER_H

@@ -3,6 +3,7 @@
 #define TYPES_H
 
 #define MAX_STUDENTS 1024
+#define COMMANDS_COUNT 9
 
 typedef struct {
 	int id;
@@ -15,5 +16,10 @@ typedef struct {
 	Student students[MAX_STUDENTS];
 	int top;
 }Students;
+
+typedef struct {
+	char name[32];
+	void (*function)();
+}Functions;
 
 #endif // !TYPES_H
