@@ -32,7 +32,12 @@ void load_data();
 /*
 	Utils
 */
-float command_similarity(const char*, const char*);
 char* input();
+int strtoint(const char*);
+char* inttostr(const int);
+float strtoflt(const char*);
 void process_input();
+void display_student(Student);
+int find_student_by_id(int);
+void swap(Student*, Student*);
 #endif // !STUDENT_MANAGER_H

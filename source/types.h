@@ -14,11 +14,12 @@ typedef struct {
 
 typedef struct {
 	Student students[MAX_STUDENTS];
-	int top;
+	int size;
 }Students;
 
 typedef struct {
 	char name[32];
+	char description[64];
 	void (*function)();
 }Functions;
 
