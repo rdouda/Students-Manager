@@ -38,6 +38,7 @@ void main_loop(Student students[], int* students_count){
 
 void add_student(Student students[], int *size){
 	Student student;
+	char temp;
 	while(1){
 		printf("Enter 'cancel' to return.\n");
 		printf("Enter student id      : ");
@@ -55,7 +56,8 @@ void add_student(Student students[], int *size){
 	printf("Enter student average : ");
 	scanf_s("%f", &student.average);
 	printf("Enter student name    : ");
-	scanf_s("%s", student.name, (unsigned int)sizeof(student.name));
+	scanf_s("%c", &temp, (unsigned int)sizeof(temp));
+	scanf_s("%[^\n]", student.name, (unsigned int)sizeof(student.name));
 
 	students[*size].id = student.id;
 	students[*size].average = student.average;
